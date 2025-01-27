@@ -53,7 +53,7 @@ export default function SignUp () {
     <div className="bg-gray-200 font-sans text-gray-700">
       <div className="container mx-auto p-8 flex">
         <div className="max-w-md w-full mx-auto">
-          <h1 className="text-4xl text-center mb-12 font-thin">Sign up</h1>
+          <h1 className="text-5xl text-center mb-12 font-thin">Sign up</h1>
 
           <div className="bg-white rounded-lg overflow-hidden shadow-2xl">
             <div className="p-8">

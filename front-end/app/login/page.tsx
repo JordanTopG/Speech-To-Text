@@ -42,10 +42,12 @@ export default function Login () {
 
   
 return (
+ <div className="min-h-screen bg-gray-200">
     <div className="bg-gray-200 font-sans text-gray-700">
       <div className="container mx-auto p-8 flex">
         <div className="max-w-md w-full mx-auto">
-          <h1 className="text-4xl text-center mb-12 font-thin">Login</h1>
+          <h1 className="text-5xl text-center mb-12 font-thin">Login</h1>
+
 
           <div className="bg-white rounded-lg overflow-hidden shadow-2xl">
             <div className="p-8">
@@ -95,6 +97,7 @@ return (
               </form>
             </div>
 
+
             <div className="flex justify-between p-8 text-md border-t border-gray-300 bg-gray-100">
               <Link href="/sign-up" className="font-medium text-blue-500">
                 Create account
@@ -103,13 +106,13 @@ return (
               <Link href="/forgotten-password-send-email" className="text-gray-600 text-md">
                 Forgot password?
               </Link>
-            
             </div>
           </div>
-          { successfulMessage && <p className="success_message bg-teal-100 text-teal-600 text-center mt-4 rounded-md">{successfulMessage}</p> }
-          { errorMessage && <p className="success_message bg-teal-100 text-teal-600 text-center mt-4 rounded-md">{errorMessage}</p> }
         </div>
       </div>
+      { successfulMessage && <p className="success_message bg-teal-100 text-teal-600 text-center mt-4 rounded-md">{successfulMessage}</p> }
+      { errorMessage && <p className="success_message bg-teal-100 text-teal-600 text-center mt-4 rounded-md">{errorMessage}</p> }
+    </div>
     </div>
   );
 };
