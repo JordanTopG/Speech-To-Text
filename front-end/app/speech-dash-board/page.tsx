@@ -20,7 +20,7 @@ export default function speechDashboard() {
             <div className="flex justify-center">
               <main className="flex flex-col items-center text-center">
                 <h2 className="text-3xl texxt-center mb-12 font-bold">
-                  "{quote}"
+                  {quote}
                 </h2>
                 <textarea
                   className="mt-4 w-[600px] h-[300px] bg-black/5 border-b border-l border-solid border-white shadow-inner rounded-lg p-4 focus:outline-none focus:bg-white transition-colors ease-in-out"

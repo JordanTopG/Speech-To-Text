@@ -1,12 +1,14 @@
 "use client";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useRouter } from "next/navigation";
 import Link from 'next/link'
+import { quotes } from "../data/dashboardQuotes";
 
 export default function SignUp () {
     const router = useRouter();
     const [successfulMessage, setSuccessfulMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [quote, setRandomQuote] = useState("");
     const [formData, setFormData] = useState({
       firstname: "",
       surname: "",
@@ -15,6 +17,10 @@ export default function SignUp () {
       address: "",
       password: "",
     });
+
+    useEffect(() => {
+            setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+          }, []);
 
     const handleChange = (e: any) => {
       const {name, value} = e.target;
@@ -54,6 +60,9 @@ export default function SignUp () {
       <div className="container mx-auto p-8 flex">
         <div className="max-w-md w-full mx-auto">
           <h1 className="text-5xl text-center mb-12 font-thin">Sign up</h1>
+          <h2 className="text-3xl texxt-center mb-12 font-bold">
+                  {quote}
+                </h2>
 
           <div className="bg-white rounded-lg overflow-hidden shadow-2xl">
             <div className="p-8">
