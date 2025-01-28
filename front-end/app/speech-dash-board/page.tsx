@@ -12,15 +12,15 @@ export default function speechDashboard() {
   }, []);
 
   const handlePlay = () => {
-    setIsPlaying(true); // Start the animation when Play is pressed
+    setIsPlaying(true); // Starts the animation 
   };
 
   const handlePause = () => {
-    setIsPlaying(false); // Pause the animation when Pause is pressed
+    setIsPlaying(false); // stops the animation but can be used in "pause" too
   };
 
   const handleStop = () => {
-    setIsPlaying(false); // Stop the animation when Stop is pressed
+    setIsPlaying(false); // Stops the animation 
   };
 
   return (
@@ -35,8 +35,9 @@ export default function speechDashboard() {
               <main className="flex flex-col items-center text-center">
                 <h2 className="text-3xl text-center mb-12 font-bold">
                   {quote}
-                </h2>
-                <AnimatedCircle isPlaying={isPlaying} />
+                </h2> 
+                <AnimatedCircle isPlaying={isPlaying} //places the animated circle bellow the 'qoute' and above the 'text area' 
+                />
                 <textarea
                   className="mt-4 w-[600px] h-[300px] bg-black/5 border-b border-l border-solid border-white shadow-inner rounded-lg p-4 focus:outline-none focus:bg-white transition-colors ease-in-out"
                   placeholder="Press 'Play' to start recording..."
@@ -49,16 +50,18 @@ export default function speechDashboard() {
                   }}
                 >
                   <button className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
-                  onClick={handlePlay}
+                  onClick={handlePlay} //when the user "clicks" the animation will play
                   >
                     Play
                   </button>
                   <button className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
-                  onClick={handlePause}>
+                  onClick={handlePause} // the animation will stop when the user clicks on the pause button
+                  > 
                     Pause
                   </button>
                   <button className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
-                  onClick={handleStop} >
+                  onClick={handleStop} // the animation will stop when the user clicks on the stop button (same logic as the pause button)
+                  >
                     Stop
                   </button>
                 </div>
