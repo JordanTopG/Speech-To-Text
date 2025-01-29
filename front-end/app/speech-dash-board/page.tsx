@@ -17,11 +17,11 @@ export default function speechDashboard() {
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
+    setText(e.target.value); // checks if there is text in the text area
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(text); // Copy text
+    navigator.clipboard.writeText(text); // Copies the text when called
   };
 
   return (
