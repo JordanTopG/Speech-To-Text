@@ -6,6 +6,7 @@ import AnimatedCircle from "../data/animatedCircle";
 export default function speechDashboard() {
   const [quote, setRandomQuote] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
+  const [text, setText] = useState("");
 
   useEffect(() => {
     setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
@@ -13,6 +14,14 @@ export default function speechDashboard() {
 
   const handleIsPlaying = (isPlaying: boolean) => {
     setIsPlaying(isPlaying);
+  };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text); // Copy text
   };
 
   return (
@@ -33,11 +42,12 @@ export default function speechDashboard() {
                 <textarea
                   className="mt-4 w-[600px] h-[300px] bg-black/5 border-b border-l border-solid border-white shadow-inner rounded-lg p-4 focus:outline-none focus:bg-white transition-colors ease-in-out"
                   placeholder="Press 'Play' to start recording..."
+                  onChange={handleTextChange} 
                 ></textarea>
                 <div
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "auto auto auto",
+                    gridTemplateColumns: "auto auto auto auto",
                     gap: "20px",
                   }}
                 >
@@ -58,6 +68,12 @@ export default function speechDashboard() {
                     onClick={() => handleIsPlaying(false)} // the animation will stop when the user clicks on the stop button (same logic as the pause button)
                   >
                     Stop
+                  </button>
+                  <button
+                    className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
+                    onClick={handleCopy} // allows the user to copy the text
+                  >
+                    Copy
                   </button>
                 </div>
               </main>
