@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { quotes } from "../data/dashboardQuotes";
-import AnimatedCircle from  "../data/animatedCircle";
+import AnimatedCircle from "../data/animatedCircle";
 
 export default function speechDashboard() {
   const [quote, setRandomQuote] = useState("");
@@ -11,16 +11,8 @@ export default function speechDashboard() {
     setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   }, []);
 
-  const handlePlay = () => {
-    setIsPlaying(true); // Starts the animation 
-  };
-
-  const handlePause = () => {
-    setIsPlaying(false); // stops the animation but can be used in "pause" too
-  };
-
-  const handleStop = () => {
-    setIsPlaying(false); // Stops the animation 
+  const handleIsPlaying = (isPlaying: boolean) => {
+    setIsPlaying(isPlaying);
   };
 
   return (
@@ -35,9 +27,9 @@ export default function speechDashboard() {
               <main className="flex flex-col items-center text-center">
                 <h2 className="text-3xl text-center mb-12 font-bold">
                   {quote}
-                </h2> 
-                <AnimatedCircle isPlaying={isPlaying} //places the animated circle bellow the 'qoute' and above the 'text area' 
-                />
+                </h2>
+                {isPlaying ? <AnimatedCircle /> : null}
+
                 <textarea
                   className="mt-4 w-[600px] h-[300px] bg-black/5 border-b border-l border-solid border-white shadow-inner rounded-lg p-4 focus:outline-none focus:bg-white transition-colors ease-in-out"
                   placeholder="Press 'Play' to start recording..."
@@ -49,18 +41,21 @@ export default function speechDashboard() {
                     gap: "20px",
                   }}
                 >
-                  <button className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
-                  onClick={handlePlay} //when the user "clicks" the animation will play
+                  <button
+                    className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
+                    onClick={() => handleIsPlaying(true)} //when the user "clicks" the animation will play
                   >
                     Play
                   </button>
-                  <button className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
-                  onClick={handlePause} // the animation will stop when the user clicks on the pause button
-                  > 
+                  <button
+                    className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
+                    onClick={() => handleIsPlaying(false)} // the animation will stop when the user clicks on the pause button
+                  >
                     Pause
                   </button>
-                  <button className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
-                  onClick={handleStop} // the animation will stop when the user clicks on the stop button (same logic as the pause button)
+                  <button
+                    className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
+                    onClick={() => handleIsPlaying(false)} // the animation will stop when the user clicks on the stop button (same logic as the pause button)
                   >
                     Stop
                   </button>

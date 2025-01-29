@@ -6,5 +6,5 @@ export const quotes = [
     "Your voice matters...",
     "Your Voice is the Keyboard...",
     "Efficiency at the Speed of Sound.",
-    "Speech to Text, Effortless Success.",
+    "Speech to Text, Effortless Success."
 ];
