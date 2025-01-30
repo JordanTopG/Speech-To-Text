@@ -6,7 +6,12 @@ const { SpeechClient } = require("@google-cloud/speech");
 const { user } = require("./models/user");
 
 module.exports = (app) => {
-  app.post("/login", (req, res, next) => {
+  //compare the hash password with the password during the login phase
+  async function compareHashedPasswords(password, hashedPassword) {
+    return await bcrypt.compare(password, hashedPassword);
+  }
+
+  app.post("/login", async (req, res, next) => {
     const { body } = req;
     const { username } = body;
     const { password } = body;
@@ -24,35 +29,34 @@ module.exports = (app) => {
     }
   });
 
-  //Protected route
-  app.get("/user/data", checkToken, (req, res) => {
-    //If verified then a JWT token is generated for the user
-    jwt.verify(req.token, "privatekey", (err, authorizedData) => {
-      if (err) {
-        //If error send Forbidden (403)
-        console.log("ERROR: Could not connect to the protected route");
-        res.sendStatus(403);
-      } else {
-        //If token is successfully verified, sends authorised data
-        res.json({
-          message: "Successful log in",
-          authorizedData,
-        });
-        console.log("SUCCESS: Connected to protected route");
-      }
+  const isMatch = compareHashedPasswords(user.password, hashPassword);
+
+  if (isMatch) {
+    //Protected route
+    app.get("/user/data", checkToken, (req, res) => {
+      //If verified then a JWT token is generated for the user
+      jwt.verify(req.token, "privatekey", (err, authorizedData) => {
+        if (err) {
+          //If error send Forbidden (403)
+          console.log("ERROR: Could not connect to the protected route");
+          res.sendStatus(403);
+        } else {
+          //If token is successfully verified, sends authorised data
+          res.json({
+            message: "Successfully logged in",
+            authorizedData,
+          });
+          console.log("SUCCESS: Connected to protected route");
+        }
+      });
     });
-  });
+  }
 
   //encrypt the password called when user signs up
 
   async function hashPassword(password) {
     const salt = await bcrypt.genSalt(10);
     return await bcrypt.hash(password, salt);
-  }
-
-  //compare the hash password with the password during the login phase
-  async function comparePasswords(password, hashedPassword) {
-    return await bcrypt.compate(password, hashedPassword);
   }
 
   app.post("/sign-up", async (req, res, next) => {
@@ -69,6 +73,7 @@ module.exports = (app) => {
         console.log("ERROR: Email already in use.");
         res.status(403);
       }
+      const hashedPassword = await hashPassword(password);
       //save user data to databse
       const user = await user.create({
         firstname,
@@ -76,7 +81,7 @@ module.exports = (app) => {
         dob,
         email,
         address,
-        password,
+        password: hashedPassword,
       });
       //jwt token created for 'new' user
       jwt.sign({ user }, "privatekey", { expiresIn: "1d" }, (err, token) => {
