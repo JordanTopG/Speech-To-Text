@@ -6,8 +6,10 @@ import AnimatedCircle from "../data/animatedCircle";
 export default function speechDashboard() {
   const [quote, setRandomQuote] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showCopyWarning, setShowCopy] = useState(false);
   const [text, setText] = useState("");
-
+  const [isCopied, setIsCopied] = useState(false);
+  
   useEffect(() => {
     setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   }, []);
@@ -21,9 +23,18 @@ export default function speechDashboard() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(text); // Copies the text when called
-  };
-
+    if (isPlaying) {
+      setShowCopy(true); 
+      setTimeout(() => setShowCopy(false), 3000); 
+    } else {
+      navigator.clipboard.writeText(text)
+      .then(() => {
+        setIsCopied(true); 
+        setTimeout(() => setIsCopied(false), 2000);
+      })
+    };
+  }
+  
   return (
     <div className="min-h-screen bg-gray-200">
       <div className="bg-gray-200 font-sans text-gray-700">
@@ -32,6 +43,11 @@ export default function speechDashboard() {
             <h1 className="text-7xl text-center mb-12 font-thin">
               Speech to Text
             </h1>
+            {showCopyWarning && (
+              <div className="absolute top-[200px] left-1/2 transform -translate-x-1/2 bg-gray-700 text-white text-md px-4 py-2 rounded shadow">
+                Cannot copy while speaking ...
+              </div>
+            )}
             <div className="flex justify-center">
               <main className="flex flex-col items-center text-center">
                 <h2 className="text-3xl text-center mb-12 font-bold">
@@ -42,7 +58,7 @@ export default function speechDashboard() {
                 <textarea
                   className="mt-4 w-[600px] h-[300px] bg-black/5 border-b border-l border-solid border-white shadow-inner rounded-lg p-4 focus:outline-none focus:bg-white transition-colors ease-in-out"
                   placeholder="Press 'Play' to start recording..."
-                  onChange={handleTextChange} 
+                  onChange={handleTextChange}
                 ></textarea>
                 <div
                   style={{
@@ -71,10 +87,15 @@ export default function speechDashboard() {
                   </button>
                   <button
                     className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow"
-                    onClick={handleCopy} // allows the user to copy the text
-                  >
-                    Copy
+                    onClick={handleCopy}
+                    >
+                    Copy      
                   </button>
+                  {isCopied && (
+              <div className="absolute top-[200px] left-1/2 transform -translate-x-1/2 bg-gray-700 text-white text-md px-4 py-2 rounded shadow">
+                Copied!
+              </div>
+            )}
                 </div>
               </main>
             </div>
