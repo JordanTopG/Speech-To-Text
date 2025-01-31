@@ -22,7 +22,7 @@ export default function SignUp () {
             setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
           }, []);
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const {name, value} = e.target;
       setFormData({...formData, [name]: value});
     }
@@ -31,7 +31,6 @@ export default function SignUp () {
         event.preventDefault();
 
         try {
-
           const response = await fetch('http://localhost:6000/signup', {
             method: 'POST',
             headers: {
@@ -43,6 +42,7 @@ export default function SignUp () {
           const responseData = await response.json();
 
           if(response.ok) {
+            {responseData}
             setSuccessfulMessage('You have successfully created an account, We are now redirecting you to the login page...');
             setTimeout(() => {
               router.push('/login');
@@ -60,7 +60,7 @@ export default function SignUp () {
       <div className="container mx-auto p-8 flex">
         <div className="max-w-md w-full mx-auto">
           <h1 className="text-5xl text-center mb-12 font-thin">Sign up</h1>
-          <h2 className="text-3xl texxt-center mb-12 font-bold">
+          <h2 className="text-3xl text-center mb-12 font-bold">
                   {quote}
                 </h2>
 
@@ -73,7 +73,7 @@ export default function SignUp () {
               >
                 <div className="mb-5">
                   <label
-                    id="First Name"
+                    id="firstname"
                     className="block mb-2 text-md font-medium text-gray-600"
                   >
                     First Name
@@ -81,16 +81,16 @@ export default function SignUp () {
 
                   <input
                     type="text"
-                    name="First Name"
+                    name="firstname"
                     value={formData.firstname}
-                    onChange={(e) => handleChange}
+                    onChange={handleChange}
                     className="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none"
                   />
                 </div>
 
                 <div className="mb-5">
                   <label
-                    id="Last Name"
+                    id="surname"
                     className="block mb-2 text-md font-medium text-gray-600"
                   >
                     Surname
@@ -99,7 +99,7 @@ export default function SignUp () {
                   <input
                     type="text"
                     value={formData.surname}
-                    onChange={(e) => handleChange}
+                    onChange={handleChange}
                     name="Last Name"
                     className="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none"
                   />
@@ -107,7 +107,7 @@ export default function SignUp () {
 
                 <div className="mb-5">
                   <label
-                    id="Date  of birth"
+                    id="dob"
                     className="block mb-2 text-md font-medium text-gray-600"
                   >
                     Date of Birth
@@ -116,15 +116,15 @@ export default function SignUp () {
                   <input
                     type="text"
                     value={formData.dob}
-                    onChange={(e) => handleChange}
-                    name="Date of Birth"
+                    onChange={handleChange}
+                    name="dob"
                     className="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none"
                   />
                 </div>
 
                 <div className="mb-5">
                   <label
-                    id="Email"
+                    id="email"
                     className="block mb-2 text-md font-medium text-gray-600"
                   >
                     Email
@@ -133,15 +133,15 @@ export default function SignUp () {
                   <input
                     type="text"
                     value={formData.email}
-                    onChange={(e) => handleChange}
-                    name="Email"
+                    onChange={handleChange}
+                    name="email"
                     className="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none"
                   />
                 </div>
 
                 <div className="mb-5">
                   <label
-                    id="Address"
+                    id="address"
                     
                     className="block mb-2 text-md font-medium text-gray-600"
                   >
@@ -151,15 +151,15 @@ export default function SignUp () {
                   <input
                     type="text"
                     value={formData.address}
-                    onChange={(e) => handleChange}
-                    name="Adress"
+                    onChange={handleChange}
+                    name="adress"
                     className="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none"
                   />
                 </div>
 
                 <div className="mb-5">
                   <label
-                    id="Password"
+                    id="password"
                     className="block mb-2 text-md font-medium text-gray-600"
                   >
                     Password
@@ -168,8 +168,8 @@ export default function SignUp () {
                   <input
                     type="text"
                     value={formData.password}
-                    onChange={(e) => handleChange}
-                    name="Password"
+                    onChange={handleChange}
+                    name="password"
                     className="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none"
                   />
                 </div>

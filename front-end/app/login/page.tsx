@@ -26,6 +26,7 @@ export default function Login () {
     const handleLogin = async (event: React.MouseEvent) => {
             console.log("Logging in...");
             event.preventDefault();
+            
 
             try {
               const response = await fetch('http://localhost:6000/login', {
@@ -53,7 +54,7 @@ return (
       <div className="container mx-auto p-8 flex">
         <div className="max-w-md w-full mx-auto">
           <h1 className="text-5xl text-center mb-12 font-thin">Login</h1>
-          <h2 className="text-3xl texxt-center mb-12 font-bold">
+          <h2 className="text-3xl text-center mb-12 font-bold">
                   {quote}
                 </h2>
 
@@ -64,7 +65,7 @@ return (
                 method="POST"
                 className=""
                 action="#"
-                //onLogin={handleLogin}
+                
               >
                 <div className="mb-5">
                   <label
@@ -78,7 +79,7 @@ return (
                     type="text"
                     name="email"
                     value={formData.email}
-                    onChange={(e) => handleChange}
+                    onChange={handleChange}
                     className="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none"
                   />
                 </div>
@@ -95,12 +96,12 @@ return (
                     type="text"
                     name="password"
                     value={formData.password}
-                    onChange={(e) => handleChange}
+                    onChange={handleChange}
                     className="block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none"
                   />
                 </div>
 
-                <button className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow">
+                <button onClick={(e) => {handleLogin(e)}} className="w-full text-2xl p-3 mt-4 bg-blue-600 text-white rounded shadow">
                   Login
                 </button>
               </form>
