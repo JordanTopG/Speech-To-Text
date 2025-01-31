@@ -4,6 +4,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { SpeechClient } = require("@google-cloud/speech");
 const { user } = require("./models/user");
+const { mongoose } = require("mongoose");
+mongoose
+  .connect("mongodb://localhost:27017")
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.log("Error connecting to MongoDB:", error));
 
 module.exports = (app) => {
   //compare the hash password with the password during the login phase
