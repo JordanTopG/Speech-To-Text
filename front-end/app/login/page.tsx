@@ -26,28 +26,34 @@ export default function Login () {
     const handleLogin = async (event: React.MouseEvent) => {
             console.log("Logging in...");
             event.preventDefault();
-            
 
             try {
-              const response = await fetch('http://localhost:6000/login', {
-                method: 'POST',
+              const response = await fetch("http://localhost:6000/login", {
+                method: "POST",
                 headers: {
-                  'Content-Type' : 'application/json',
+                  "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                 email: formData.email,
-                 password: formData.password,
-                }),
+                body: JSON.stringify(formData),
               });
-              setSuccessfulMessage('Succesfully logged in.')
-            } 
-            catch (error) {
-              setErrorMessage('Failed to log in. Please try again. ');
-              console.error
+        
+              const responseData = await response.json();
+        
+              if (response.ok) {
+        
+                {responseData;}
+        
+                setSuccessfulMessage("You have successfully logged in! Redirecting you to Dashboard!");
+                setTimeout(() => {router.push("/speech-dash-board"); }, 3000);
+              } else {
+                throw new Error("Failed to log in.");
+              }
+            } catch (error) {
+              setErrorMessage("Failed to log in. please try again.");
+              console.error;
             }
-          }
+          };          
+                
 
-  
 return (
  <div className="min-h-screen bg-gray-200">
     <div className="bg-gray-200 font-sans text-gray-700">
@@ -121,7 +127,7 @@ return (
         </div>
       </div>
       { successfulMessage && <p className="success_message bg-teal-100 text-teal-600 text-center mt-4 rounded-md">{successfulMessage}</p> }
-      { errorMessage && <p className="success_message bg-teal-100 text-teal-600 text-center mt-4 rounded-md">{errorMessage}</p> }
+      { errorMessage && <p className="error_message bg-orange-100 text-red-600 text-center mt-4 rounded-md">{errorMessage}</p> }
     </div>
     </div>
   );
